@@ -20,13 +20,30 @@ jobs:
     
     - name: Configure CMake
       run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 17 2022" -A x64
+        cmake -B build -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 17 2022" -A x64 -DCMAKE_VERBOSE_MAKEFILE=ON
     
     - name: Build
-      run: cmake --build build --config Release
+      run: |
+        cmake --build build --config Release --verbose
+      continue-on-error: false
+    
+    - name: List build output
+      if: always()
+      run: |
+        Get-ChildItem -Path build -Recurse -ErrorAction SilentlyContinue
     
     - name: Upload artifact
+      if: success()
       uses: actions/upload-artifact@v4
       with:
         name: AudioRecorder-Windows
         path: build/Release/AudioRecorder.exe
+    
+    - name: Upload build logs on failure
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-logs
+        path: |
+          build/**/*.log
+          build/CMakeFiles/*.log
