@@ -23,7 +23,7 @@ jobs:
       run: cmake --build build --config Release
     
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: AudioRecorder-Windows
         path: build/Release/AudioRecorder.exe
@@ -56,7 +56,7 @@ jobs:
       run: cmake --build build --config Release
     
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: AudioRecorder-Linux
         path: build/AudioRecorder
@@ -74,7 +74,7 @@ jobs:
       run: cmake --build build --config Release
     
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: AudioRecorder-macOS
         path: build/AudioRecorder
